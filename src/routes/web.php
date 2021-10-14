@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{any?}', function () {
-    return view('welcome');
-})->where('any','^(?!api\/)[\/\w\.-]*');
+Route::get('/', function() {
+    return view('app');
+});
+
+Route::get('/{any}', function() {
+    return view('app');
+})->where('any', '.*');
+// どんなURLでもview('app')を返す
+
+// Route::get('/{any?}', function () {
+//     return view('welcome');
+// })->where('any','^(?!api\/)[\/\w\.-]*');

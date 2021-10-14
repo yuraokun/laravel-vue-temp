@@ -16,5 +16,10 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 # RUN php artisan ui vue
 # RUN npm install
 # RUN npm install vue-router
+# RUN npm install vuex
 # example.envをコピーして.envファイルを作成
 # npm installの後にnode_modulesとpakage.lockを削除後もう一回npm installしないとエラーが出る
+
+# /var/www/html # php artisan tinker
+# Psy Shell v0.10.8 (PHP 8.0.11 — cli) by Justin Hileman
+# >>> $category = App\Models\Category::factory()->make();
