@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\testController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,6 +21,24 @@ use App\Http\Controllers\Api\UserController;
 //     return $request->user();
 // });
 
-Route::get('/products', [ProductController::class,'index']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('/products', [ProductController::class,'purchase']);
+Route::resource('/products', ProductController::class);
+
+
+// if you want to authenticate user who uses an api
+Route::group(['middleware' => ['auth:sanctum']], function() {
+        Route::get('/products/search/{name}', [ProductController::class,'search']);
+
+        Route::post('/logout', [AuthController::class, 'logout']);
+});
+
+
+
+
+
+Route::resource('/test', testController::class);
+
+
+// Route::post('/products', [ProductController::class,'purchase']);

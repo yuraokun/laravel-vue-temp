@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Product;
 
-class ProductController extends Controller
+class testController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-     public function index() {
- return Product::with('categories:id,name')->get();
+    public function index()
+    {
+        //
     }
 
     /**
@@ -26,15 +25,6 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
-
-        $request->validate([
-            'name' => 'required',
-            'slug' => 'required',
-            'description' => 'required',
-            'price' => 'required'
-        ]);
-        $response = Product::create($request->all());
-        return $response;
     }
 
     /**
@@ -43,10 +33,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function show($id)
+    public function show($id)
     {
         //
-        return Product::with('categories')->find($id);
     }
 
     /**
@@ -59,9 +48,6 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $product = Product::find($id);
-        $product->update($request->all());
-        return $product;
     }
 
     /**
@@ -73,12 +59,5 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
-        return Product::destroy($id);
-    }
-
-    public function search($name)
-    {
-        //
-        return Product::where('name', 'like', '%'. $name . '%')->get();
     }
 }

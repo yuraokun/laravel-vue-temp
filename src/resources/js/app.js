@@ -4,15 +4,19 @@ import Vuex from "vuex";
 import VueRouter from "vue-router";
 import axios from "axios";
 
+import App  from "./components/main.vue";
+import { create } from "lodash";
+
 // import router from "./routes";
 
 // window.Vue = require('vue').default;
+
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
 
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 
 const router = new VueRouter({
@@ -30,8 +34,8 @@ const store = new Vuex.Store({
         updateProducts(state, products) {
             state.products = products;
         },
-        addToCard(state, product) {
-            let productInCartIndex = state.cart.findIndex(item => item.slug == products.slug);
+        addToCart(state, product) {
+            let productInCartIndex = state.cart.findIndex(item => item.slug == product.slug);
             if (productInCartIndex != -1) {
                 state.cart[productInCartIndex].quantity++;
                 return;
@@ -39,6 +43,15 @@ const store = new Vuex.Store({
 
             product.quantity = 1;
             state.cart.push(product)
+        },
+        reduceFromCart(state, product) {
+            let productInCartIndex = state.cart.findIndex(item => item.slug == product.slug);
+            if (state.cart[productInCartIndex].quantity < 2) {
+                state.cart.splice(productInCartIndex, 1);
+                return 
+            }
+            state.cart[productInCartIndex].quantity--;
+
         },
         removeFromCart(state, index) {
             state.cart.splice(index, 1);
@@ -70,9 +83,18 @@ const app = new Vue({
     router,
     store,
     el: '#app',
+    components: {
+        App
+    },
     created() {
         store.dispatch('getProducts')
         .then(() => { })
         .catch(error => console.error(error))
     }
 });
+// new Vue({
+//     el: '#app',
+//     components: { App },
+
+// })
+

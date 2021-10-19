@@ -7,6 +7,7 @@
     </div>
     <p>{{ product.description}}</p>
     <h3 v-text="fortmatPrice(product.price)"></h3>
+<button @click="addItemCart(product)">Add To Cart</button>
 
 
 
@@ -15,19 +16,30 @@
 
 <script>
 export default {
+  // data: () => {
+
+  //   return {
+  //     product: this.product()
+  //   }
+
+  // },
 
   methods: {
     fortmatPrice(price) {
       return price.toLocaleString() + "円";
     },
+    addItemCart(product) {
+      this.$store.commit('addToCart', product)
+      console.log(this.$store.state.cart);
+    }
   },
 
   computed: {
   products() {
-    return $this.$store.state.products;
+    return this.$store.state.products;
   },
   product() {
-    return this.$store.state.products.find(product => product.slug == this.$route.params.slug)
+    return this.products.find(product => product.slug == this.$route.params.slug)
   }
 
   }
