@@ -1,6 +1,6 @@
 <template>
   <div style="text-align: center; padding: 20px;">
-    <h1>Honda Shopping Site</h1>
+    <h1>Honda Shopping Site ^-^</h1>
     <nav>
       <router-link :to="{name: 'products.index'}">
         Products

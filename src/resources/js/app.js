@@ -76,6 +76,9 @@ const store = new Vuex.Store({
         clearCart({ commit }) {
             commit('updateCart', [])
         }
+    },
+    getters: {
+        value: (state) => state.value
     }
 })
 

@@ -2204,6 +2204,11 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_4__["default"].Store({
       var commit = _ref2.commit;
       commit('updateCart', []);
     }
+  },
+  getters: {
+    value: function value(state) {
+      return state.value;
+    }
   }
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_3__["default"]({
@@ -37862,7 +37867,7 @@ var render = function() {
     "div",
     { staticStyle: { "text-align": "center", padding: "20px" } },
     [
-      _c("h1", [_vm._v("Honda Shopping Site")]),
+      _c("h1", [_vm._v("Honda Shopping Site ^-^")]),
       _vm._v(" "),
       _c(
         "nav",
