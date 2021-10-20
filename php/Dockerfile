@@ -62,6 +62,9 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 # php artisan migrate:refresh  --step=1 --path=/database/migrations/ファイル名
 
 
+#laravel mix で.envファイルにMIX_をつけた環境変数はprocess.env.MIX_xxxでvueのコンポーネント内で値をとってこれる
+
+
 
 
 ###### 決済系のライブラリ cachier stripeなどを使用する際
