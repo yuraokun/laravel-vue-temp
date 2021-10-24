@@ -269,14 +269,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -290,7 +282,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         address: "",
         city: "",
         state: "",
-        zip_code: ""
+        zip_code: "",
+        payment_method_id: ""
       },
       paymentProcessing: false
     };
@@ -334,7 +327,71 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return price.toLocaleString() + "円";
     },
     reduceCart: function reduceCart(item) {},
-    processPayment: function processPayment() {}
+    processPayment: function processPayment() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var _yield$_this2$stripe$, paymentMethod, error;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this2.paymentProcessing = true;
+                _context2.next = 3;
+                return _this2.stripe.createPaymentMethod("card", _this2.cardElement, {
+                  billing_details: {
+                    name: _this2.customer.first_name + " " + _this2.customer.last_name,
+                    email: _this2.customer.email,
+                    address: {
+                      line1: _this2.customer.address,
+                      city: _this2.customer.city,
+                      state: _this2.customer.state,
+                      postal_code: _this2.customer.zip_code
+                    }
+                  }
+                });
+
+              case 3:
+                _yield$_this2$stripe$ = _context2.sent;
+                paymentMethod = _yield$_this2$stripe$.paymentMethod;
+                error = _yield$_this2$stripe$.error;
+
+                if (error) {
+                  _this2.paymentProcessing = false; // alert(error);
+
+                  console.log(error);
+                } else {
+                  _this2.customer.payment_method_id = paymentMethod.id;
+                  _this2.customer.amount = _this2.cart.reduce(function (acc, item) {
+                    return acc + item.price * item.quantity;
+                  }, 0);
+                  _this2.customer.cart = JSON.stringify(_this2.cart);
+                  axios.post("/api/purchase", _this2.customer).then(function (response) {
+                    _this2.paymentProcessing = false;
+
+                    _this2.$store.commit("updateOrder", response.data);
+
+                    _this2.$store.dispatch("clearCart");
+
+                    _this2.$router.push({
+                      name: "order.summary"
+                    });
+                  })["catch"](function (error) {
+                    _this2.paymentProcessing = false; // alert(error);
+
+                    console.log(error);
+                  });
+                }
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    }
   },
   computed: {
     cart: function cart() {
@@ -1741,32 +1798,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", [
-            _c("label", [_vm._v("last name")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.customer.last_name,
-                  expression: "customer.last_name"
-                }
-              ],
-              attrs: { type: "text", name: "last_name" },
-              domProps: { value: _vm.customer.last_name },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.customer, "last_name", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", [
-            _c("label", [_vm._v("last name")]),
+            _c("label", [_vm._v("email")]),
             _vm._v(" "),
             _c("input", {
               directives: [

@@ -10,9 +10,7 @@
 </head>
 
 <body>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+  <h1>Wel come</h1>
 </body>
 
 </html>

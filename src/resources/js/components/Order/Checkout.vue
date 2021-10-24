@@ -54,15 +54,7 @@
                     />
                 </div>
                 <div>
-                    <label>last name</label>
-                    <input
-                        type="text"
-                        name="last_name"
-                        v-model="customer.last_name"
-                    />
-                </div>
-                <div>
-                    <label>last name</label>
+                    <label>email</label>
                     <input type="email" name="email" v-model="customer.email" />
                 </div>
 
@@ -114,7 +106,8 @@ export default {
                 address: "",
                 city: "",
                 state: "",
-                zip_code: ""
+                zip_code: "",
+                payment_method_id: ""
             },
             paymentProcessing: false
         };
@@ -143,7 +136,62 @@ export default {
             return price.toLocaleString() + "円";
         },
         reduceCart(item) {},
-        processPayment() {}
+        async processPayment() {
+            this.paymentProcessing = true;
+
+            const {
+                paymentMethod,
+                error
+            } = await this.stripe.createPaymentMethod(
+                "card",
+                this.cardElement,
+                {
+                    billing_details: {
+                        name:
+                            this.customer.first_name +
+                            " " +
+                            this.customer.last_name,
+                        email: this.customer.email,
+                        address: {
+                            line1: this.customer.address,
+                            city: this.customer.city,
+                            state: this.customer.state,
+                            postal_code: this.customer.zip_code
+                        }
+                    }
+                }
+            );
+
+            if (error) {
+                this.paymentProcessing = false;
+                // alert(error);
+                console.log(error);
+            } else {
+                this.customer.payment_method_id = paymentMethod.id;
+                this.customer.amount = this.cart.reduce(
+                    (acc, item) => acc + item.price * item.quantity,
+                    0
+                );
+                this.customer.cart = JSON.stringify(this.cart);
+
+                axios
+                    .post("/api/purchase", this.customer)
+                    .then(response => {
+                        this.paymentProcessing = false;
+                        this.$store.commit("updateOrder", response.data);
+                        this.$store.dispatch("clearCart");
+
+                        this.$router.push({
+                            name: "order.summary"
+                        });
+                    })
+                    .catch(error => {
+                        this.paymentProcessing = false;
+                        // alert(error);
+                        console.log(error);
+                    });
+            }
+        }
     },
     computed: {
         cart() {

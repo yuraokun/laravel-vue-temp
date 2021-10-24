@@ -2281,28 +2281,34 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = [{
-  path: '/',
-  name: 'products.index',
+  path: "/",
+  name: "products.index",
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_components_Products_Index_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/Products/Index.vue */ "./resources/js/components/Products/Index.vue"));
   }
 }, {
-  path: '/product/:slug',
-  name: 'products.show',
+  path: "/product/:slug",
+  name: "products.show",
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_components_Products_Show_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/Products/Show.vue */ "./resources/js/components/Products/Show.vue"));
   }
 }, {
-  path: '/checkout',
-  name: 'orders.checkout',
+  path: "/checkout",
+  name: "orders.checkout",
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_components_Order_Checkout_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/Order/Checkout.vue */ "./resources/js/components/Order/Checkout.vue"));
   }
 }, {
-  path: '/summary',
-  name: 'orders.summary',
+  path: "/summary",
+  name: "orders.summary",
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_components_Order_Summary_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/Order/Summary.vue */ "./resources/js/components/Order/Summary.vue"));
+  }
+}, {
+  path: "/unauthenticated",
+  name: "unauthenticated",
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_components_error_unauthenticated_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/error/unauthenticated.vue */ "./resources/js/components/error/unauthenticated.vue"));
   }
 }]; // import ExampleComponent from "./components/ExampleComponent";
 // import VueRouter from "vue-router";
@@ -54625,7 +54631,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_Products_Index_vue":1,"resources_js_components_Products_Show_vue":1,"resources_js_components_Order_Checkout_vue":1,"resources_js_components_Order_Summary_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_Products_Index_vue":1,"resources_js_components_Products_Show_vue":1,"resources_js_components_Order_Checkout_vue":1,"resources_js_components_Order_Summary_vue":1,"resources_js_components_error_unauthenticated_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

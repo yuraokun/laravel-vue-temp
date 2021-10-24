@@ -17,11 +17,16 @@ Route::get('/', function() {
     return view('app');
 });
 
-Route::get('/{any}', function() {
-    return view('app');
-})->where('any', '.*');
+// Route::get('/{any}', function() {
+//     return view('app');
+// })->where('any', '.*');
+
+
+Route::get('/auth', function() {
+  return "ok";
+})->middleware('auth');
 // どんなURLでもview('app')を返す
 
-// Route::get('/{any?}', function () {
-//     return view('welcome');
-// })->where('any','^(?!api\/)[\/\w\.-]*');
+Route::get('/{any?}', function () {
+    return view('app');
+})->where('any','^(?!api\/)[\/\w\.-]*');

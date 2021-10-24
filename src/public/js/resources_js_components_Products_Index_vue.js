@@ -28,14 +28,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      titles: [],
+      word: null
+    };
+  },
   methods: {
     fortmatPrice: function fortmatPrice(price) {
       return price.toLocaleString() + "円";
+    },
+    getTitles: function getTitles() {
+      var _this = this;
+
+      axios("/api/test-invoke").then(function (res) {
+        _this.titles = res.data;
+      })["catch"](function (err) {
+        return console.log(err);
+      });
     } // honda2(name) {
     //   return name.toLocaleString() + "円"
     // }
 
+  },
+  mounted: function mounted() {
+    this.getTitles();
   },
   computed: {
     products: function products() {
@@ -43,6 +82,25 @@ __webpack_require__.r(__webpack_exports__);
     },
     honda: function honda() {
       return "honda";
+    }
+  },
+  watch: {
+    word: function word() {
+      var _this2 = this;
+
+      axios({
+        method: "POST",
+        url: "/api/find",
+        data: {
+          word: this.word
+        }
+      }).then(function (res) {
+        console.log(res.data);
+        _this2.titles = res.data;
+        console.log(_this2.titles);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
     }
   }
 });
@@ -65,7 +123,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nh1[data-v-1dc5b81c] {\n  text-align: center;\n}\n.box[data-v-1dc5b81c] {\n    border: 1px solid rgb(109, 106, 106);\n    padding: 10px;\n    width: 30%;\n    margin: 0 auto 10px;\n}\n.tag[data-v-1dc5b81c] {\n    margin: 5px;\n    color: orange;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nh1[data-v-1dc5b81c] {\n    text-align: center;\n}\n.box[data-v-1dc5b81c] {\n    border: 1px solid rgb(109, 106, 106);\n    padding: 10px;\n    width: 30%;\n    margin: 0 auto 10px;\n}\n.tag[data-v-1dc5b81c] {\n    margin: 5px;\n    color: orange;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -557,6 +615,31 @@ var render = function() {
     [
       _c("h1", [_vm._v("Products")]),
       _vm._v(" "),
+      _c("div", [
+        _c("label", [_vm._v("search key")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.word,
+              expression: "word"
+            }
+          ],
+          attrs: { type: "text" },
+          domProps: { value: _vm.word },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.word = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
       _vm._l(_vm.products, function(product) {
         return _c(
           "div",
@@ -579,7 +662,13 @@ var render = function() {
                   return _c(
                     "span",
                     { key: category.name, staticClass: "tag" },
-                    [_vm._v("\n" + _vm._s(category.name) + "\n  ")]
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(category.name) +
+                          "\n            "
+                      )
+                    ]
                   )
                 }),
                 _vm._v(" "),
@@ -594,7 +683,28 @@ var render = function() {
           ],
           1
         )
-      })
+      }),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _vm.titles.length > 0
+        ? _c(
+            "div",
+            { staticStyle: { "text-align": "center" } },
+            _vm._l(_vm.titles, function(title, index) {
+              return _c("li", { key: index }, [
+                _vm._v(
+                  "\n            Book " +
+                    _vm._s(title.title) +
+                    " : (" +
+                    _vm._s(title.author.name) +
+                    ")\n        "
+                )
+              ])
+            }),
+            0
+          )
+        : _c("div", [_c("p", [_vm._v("検索に該当するものがありません")])])
     ],
     2
   )
