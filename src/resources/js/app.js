@@ -1,28 +1,25 @@
-require('./bootstrap');
+require("./bootstrap");
 import Vue from "vue";
 import Vuex from "vuex";
 import VueRouter from "vue-router";
 import axios from "axios";
 
-import App  from "./components/main.vue";
+import App from "./components/main.vue";
 import { create } from "lodash";
-
+// axios.defaults.withCredentials = true;
 // import router from "./routes";
 
 // window.Vue = require('vue').default;
 
-
 Vue.use(Vuex);
 Vue.use(VueRouter);
 
-
 // // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-
 const router = new VueRouter({
-    mode: 'history',
-    routes: require('./routes.js')
-})
+    mode: "history",
+    routes: require("./routes.js")
+});
 
 const store = new Vuex.Store({
     state: {
@@ -35,23 +32,26 @@ const store = new Vuex.Store({
             state.products = products;
         },
         addToCart(state, product) {
-            let productInCartIndex = state.cart.findIndex(item => item.slug == product.slug);
+            let productInCartIndex = state.cart.findIndex(
+                item => item.slug == product.slug
+            );
             if (productInCartIndex != -1) {
                 state.cart[productInCartIndex].quantity++;
                 return;
             }
 
             product.quantity = 1;
-            state.cart.push(product)
+            state.cart.push(product);
         },
         reduceFromCart(state, product) {
-            let productInCartIndex = state.cart.findIndex(item => item.slug == product.slug);
+            let productInCartIndex = state.cart.findIndex(
+                item => item.slug == product.slug
+            );
             if (state.cart[productInCartIndex].quantity < 2) {
                 state.cart.splice(productInCartIndex, 1);
-                return 
+                return;
             }
             state.cart[productInCartIndex].quantity--;
-
         },
         removeFromCart(state, index) {
             state.cart.splice(index, 1);
@@ -65,34 +65,36 @@ const store = new Vuex.Store({
     },
     actions: {
         getProducts({ commit }) {
-            axios.get('/api/products')
+            axios
+                .get("/api/products")
                 .then(response => {
-                commit('updateProducts', response.data)
+                    commit("updateProducts", response.data);
                 })
                 .catch(error => {
-                console.error(error)
-            })
+                    console.error(error);
+                });
         },
         clearCart({ commit }) {
-            commit('updateCart', [])
+            commit("updateCart", []);
         }
     },
     getters: {
-        value: (state) => state.value
+        value: state => state.value
     }
-})
+});
 
 const app = new Vue({
     router,
     store,
-    el: '#app',
+    el: "#app",
     components: {
         App
     },
     created() {
-        store.dispatch('getProducts')
-        .then(() => { })
-        .catch(error => console.error(error))
+        store
+            .dispatch("getProducts")
+            .then(() => {})
+            .catch(error => console.error(error));
     }
 });
 // new Vue({
@@ -100,4 +102,3 @@ const app = new Vue({
 //     components: { App },
 
 // })
-

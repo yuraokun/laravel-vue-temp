@@ -19,11 +19,10 @@ module.exports = [
         name: "orders.summary",
         component: () => import("./components/Order/Summary.vue")
     },
-
     {
-        path: "/unauthenticated",
-        name: "unauthenticated",
-        component: () => import("./components/error/unauthenticated.vue")
+        path: "/test",
+        name: "test",
+        component: () => import("./components/test/test_login.vue")
     }
 ];
 

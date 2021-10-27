@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>you are not authencitated..</h1>
+        <h1>you are not authencitated..!</h1>
     </div>
 </template>
 

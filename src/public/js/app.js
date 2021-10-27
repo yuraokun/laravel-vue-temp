@@ -2136,14 +2136,15 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
- // import router from "./routes";
+ // axios.defaults.withCredentials = true;
+// import router from "./routes";
 // window.Vue = require('vue').default;
 
 vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_4__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]); // // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]({
-  mode: 'history',
+  mode: "history",
   routes: __webpack_require__(/*! ./routes.js */ "./resources/js/routes.js")
 });
 var store = new vuex__WEBPACK_IMPORTED_MODULE_4__["default"].Store({
@@ -2194,15 +2195,15 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_4__["default"].Store({
   actions: {
     getProducts: function getProducts(_ref) {
       var commit = _ref.commit;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/products').then(function (response) {
-        commit('updateProducts', response.data);
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/products").then(function (response) {
+        commit("updateProducts", response.data);
       })["catch"](function (error) {
         console.error(error);
       });
     },
     clearCart: function clearCart(_ref2) {
       var commit = _ref2.commit;
-      commit('updateCart', []);
+      commit("updateCart", []);
     }
   },
   getters: {
@@ -2214,12 +2215,12 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_4__["default"].Store({
 var app = new vue__WEBPACK_IMPORTED_MODULE_3__["default"]({
   router: router,
   store: store,
-  el: '#app',
+  el: "#app",
   components: {
     App: _components_main_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   created: function created() {
-    store.dispatch('getProducts').then(function () {})["catch"](function (error) {
+    store.dispatch("getProducts").then(function () {})["catch"](function (error) {
       return console.error(error);
     });
   }
@@ -2305,10 +2306,10 @@ module.exports = [{
     return __webpack_require__.e(/*! import() */ "resources_js_components_Order_Summary_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/Order/Summary.vue */ "./resources/js/components/Order/Summary.vue"));
   }
 }, {
-  path: "/unauthenticated",
-  name: "unauthenticated",
+  path: "/test",
+  name: "test",
   component: function component() {
-    return __webpack_require__.e(/*! import() */ "resources_js_components_error_unauthenticated_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/error/unauthenticated.vue */ "./resources/js/components/error/unauthenticated.vue"));
+    return __webpack_require__.e(/*! import() */ "resources_js_components_test_test_login_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/test/test_login.vue */ "./resources/js/components/test/test_login.vue"));
   }
 }]; // import ExampleComponent from "./components/ExampleComponent";
 // import VueRouter from "vue-router";
@@ -54631,7 +54632,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_Products_Index_vue":1,"resources_js_components_Products_Show_vue":1,"resources_js_components_Order_Checkout_vue":1,"resources_js_components_Order_Summary_vue":1,"resources_js_components_error_unauthenticated_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_Products_Index_vue":1,"resources_js_components_Products_Show_vue":1,"resources_js_components_Order_Checkout_vue":1,"resources_js_components_Order_Summary_vue":1,"resources_js_components_test_test_login_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

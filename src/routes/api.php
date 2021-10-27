@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\testController;
 use App\Http\Controllers\VerifyEmailController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,6 +26,15 @@ use App\Http\Controllers\VerifyEmailController;
 // });
 
 
+Route::get('test_a', function() {
+
+
+
+return session()->all();
+});
+
+
+
 Route::post('/purchase', [UserController::class,'purchase']);
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -34,10 +44,42 @@ Route::resource('/products', ProductController::class);
 
 
 // if you want to authenticate user who uses an api
-Route::group(['middleware' => ['auth:sanctum']], function() {
-        Route::get('/products/search/{name}', [ProductController::class,'search']);
+// Route::group(['middleware' => ['auth:sanctum']], function() {
+//         Route::get('/products/search/{name}', [ProductController::class,'search']);
 
-        Route::post('/logout', [AuthController::class, 'logout']);
+//         Route::post('/logout', [AuthController::class, 'logout']);
+// });
+
+// if you want to authenticate user who uses an api
+
+
+
+Route::post('/user/logout', [UserController::class, 'logout']);
+
+Route::post('/user/login', [UserController::class, 'login']);
+
+Route::post('/user/register', [UserController::class, 'register']);
+
+
+Route::middleware('auth:users')->get("/user/check", function(Request $request) {
+
+//    return "honda";
+    return $request->user();
+});
+
+Route::group(['middleware' => ['auth:users']], function() {
+
+        
+        Route::get('/user/getMsg', function() {
+            return "hi you are authenticated";
+        });
+
+        Route::get('/user/logout', function(Request $request) {
+
+            $request->user()->currentAccessToken()->delete();
+            return $request->user();
+            
+        });
 });
 
 
@@ -154,7 +196,6 @@ Route::get('auth', function() use($posts) {
 })->middleware('auth');
 
 
-Route::auth();
 Route::post('find', [testController::class, "find"]);
 Route::get('test-show/{id}', [testController::class, "show"]);
 
